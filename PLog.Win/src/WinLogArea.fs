@@ -35,7 +35,7 @@ type WinLogArea (isDark) =
 
     let fctb = new FastColoredTextBox (ReadOnly = true, BackColor = currentMode.BackColor, ForeColor = Color.White,
                                        SelectionColor = currentMode.SelColor,
-                                       Font = new Font ("Consolas", 9.75f))
+                                       Font = new Font ("Consolas", 14f))
 
     let appendLines lines =
         fctb.BeginUpdate ()
