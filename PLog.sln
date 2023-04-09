@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PLog", "PLog\PLog.fsproj", "{0299D74F-3A17-487E-B7A4-48351E3C34B1}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PLog", "PLog\PLog.fsproj", "{0299D74F-3A17-487E-B7A4-48351E3C34B1}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PLog.Mac", "PLog.Mac\PLog.Mac.fsproj", "{1C3D9092-5B36-4A84-967C-9AA05C48F9F7}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PLog.Win", "PLog.Win\PLog.Win.fsproj", "{1CE83416-0EB2-4BC1-B41F-57996B35B5EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +17,12 @@ Global
 		{0299D74F-3A17-487E-B7A4-48351E3C34B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0299D74F-3A17-487E-B7A4-48351E3C34B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0299D74F-3A17-487E-B7A4-48351E3C34B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C3D9092-5B36-4A84-967C-9AA05C48F9F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C3D9092-5B36-4A84-967C-9AA05C48F9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C3D9092-5B36-4A84-967C-9AA05C48F9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C3D9092-5B36-4A84-967C-9AA05C48F9F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE83416-0EB2-4BC1-B41F-57996B35B5EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE83416-0EB2-4BC1-B41F-57996B35B5EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE83416-0EB2-4BC1-B41F-57996B35B5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE83416-0EB2-4BC1-B41F-57996B35B5EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
