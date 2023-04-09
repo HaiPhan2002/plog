@@ -14,6 +14,7 @@ type AddFilterDialog (callback) as this =
     let nameTextBox = new TextBox ()
     let tagTextBox = new TextBox ()
     let pidTextBox = new TextBox ()
+    let packageNameTextBox = new TextBox ()
     let okButton = new Button (Text = "OK")
     let cancelButton = new Button (Text = "Cancel")
 
@@ -26,6 +27,7 @@ type AddFilterDialog (callback) as this =
                                  Row [El (label "Filter name"); StretchedEl nameTextBox]
                                  Row [El (label "Tag"); StretchedEl tagTextBox]
                                  Row [El (label "PID"); StretchedEl pidTextBox]
+                                 Row [El (label "PackageName"); StretchedEl packageNameTextBox]
                                  ]]
             Row [TableEl <| Tbl [SPACE
                                  Pad (Padding (0, DIST, 0, 0))
@@ -39,7 +41,7 @@ type AddFilterDialog (callback) as this =
         this.Content <- layout
         cancelButton.Click.Add (fun _ -> this.Close ())
         okButton.Click.Add (fun _ ->
-            match Domain.createFilter nameTextBox.Text tagTextBox.Text pidTextBox.Text with
+            match Domain.createFilter nameTextBox.Text tagTextBox.Text pidTextBox.Text packageNameTextBox.Text with
             | Error str -> MessageBox.Show (str, MessageBoxType.Error) |> ignore
             | Ok filter -> this.Close (); callback filter
         )

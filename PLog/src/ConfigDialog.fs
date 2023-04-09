@@ -85,16 +85,17 @@ type ConfigDialog (adb, maxLogLines, negative: seq<FilterInfo>, callback) as thi
                     None
                 else
                     let i = line.IndexOf ','
-                    let tag, pid =
-                        if i = -1 then Some line, None
+                    let tag, pid, packageName =
+                        if i = -1 then Some line, None, None
                         else
                             let tag = line.Substring(0, i).Trim()
                             let tag = if tag.Length > 0 then Some tag else None
                             match parseInt (line.Substring(i + 1).Trim()) with
-                            | None -> tag, None
-                            | Some pid -> tag, Some pid
-                    if tag = None && pid = None then None
-                    else Some { Tag = tag; Pid = pid }
+                            | None -> tag, None, None
+                            | Some pid -> tag, Some pid, None
+                    if tag = None && pid = None && packageName = None then None
+                    else Some { Tag = tag; Pid = pid; PackageName = packageName }
+
             )
         callback adb maxLogLines negative
     )

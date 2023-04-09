@@ -15,3 +15,8 @@ let parseInt (str: string) =
     match Int32.TryParse str with
     | true, x -> Some x
     | _ -> None
+
+let parsePID (str: string, packageName: string) =
+    match str with
+    | str -> Some str
+    | _ -> None

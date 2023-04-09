@@ -21,7 +21,8 @@ type LogItem =
 
 type FilterInfo =
     { Tag: string option
-      Pid: int option }
+      Pid: int option 
+      PackageName: string option }
 
 type Filter =
     { Name: string
@@ -119,7 +120,7 @@ let parseLogItem (str : string) =
      else 
         parseLogItem2 str
         
-let mainFilter = { Name = "MAIN"; Info = { Tag = None; Pid = None } }
+let mainFilter = { Name = "MAIN"; Info = { Tag = None; Pid = None; PackageName = None } }
 
 let connectDevice adb device onItemsReceived onExited (key: 'key) =
     let args =
@@ -193,18 +194,21 @@ let private toOption (str: string) =
     let str = str.Trim ()
     if str.Length = 0 then None else Some str
 
-let createFilter (name: string) (tag: string) (pid: string) = result {
+let createFilter (name: string) (tag: string) (pid: string) (packageName: string)= result {
     let! name = name |> toOption |> Result.ofOption "Filter name cannot be empty."
     let tag = tag |> toOption
     let pid = pid |> toOption
-    match tag, pid with
-    | None, None ->
+    let packageName = packageName |> toOption
+    match tag, pid, packageName with
+    | None, None, None ->
         return! Error "At least Tag or PID must be provided."
-    | _, None ->
-        return { Name = name; Info = { Tag = tag; Pid = None } }
-    | _, Some pid ->
+    | _, None, None ->
+        return { Name = name; Info = { Tag = tag; Pid = None; PackageName = None } }
+    | _, Some pid, _ ->
         let! pid = pid |> parseInt |> Result.ofOption "PID must be an integer number."
-        return { Name = name; Info = { Tag = tag; Pid = Some pid } }
+        return { Name = name; Info = { Tag = tag; Pid = Some pid; PackageName = None } }
+     |_, _, Some packageName ->
+        return { Name = name; Info = { Tag = tag; Pid = None; PackageName = Some packageName } }
 }
 
 let private (+/) p1 p2 = Path.Combine (p1, p2)
