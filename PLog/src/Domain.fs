@@ -21,7 +21,7 @@ type LogItem =
 
 type FilterInfo =
     { Tag: string option
-      Pid: int option 
+      mutable Pid: int option 
       PackageName: string option }
 
 type Filter =
@@ -180,6 +180,24 @@ let logcatClear adb device =
     )
 
 let matchesFilter (info: FilterInfo) (logItem: LogItem) =
+
+    if info.PackageName <> None then
+        System.Console.WriteLine(logItem.Content)
+        let m = Regex.Match (logItem.Content, @"Start proc.+" + info.PackageName.Value)
+        if m.Success then
+            match logItem.Content.IndexOf("Start proc") with
+            | -1 -> ()
+            | start_procIdx -> 
+                let start_procIdx = start_procIdx + "Start proc".Length
+                match logItem.Content.IndexOf (":", start_procIdx) with
+                | -1 -> ()
+                | end_procIdx ->
+                    let newPid = logItem.Content.Substring(start_procIdx, end_procIdx - start_procIdx)
+                    match parseInt (newPid.ToString()) with 
+                    | parsedPid -> info.Pid <- parsedPid
+                    | _ -> ()
+
+
     let tagOk =
         match info.Tag with
         | None -> true
