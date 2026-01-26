@@ -2,7 +2,7 @@ PLog &ndash; a tool for viewing Android log and more
 ===
 
 ## Setup
-* Visual Studio or Rider with F# support.
+* Visual Studio 2022 Community or Rider with F# support.
 * .NET Core SDK 6.0.
 
 ## Build
@@ -13,9 +13,9 @@ PLog &ndash; a tool for viewing Android log and more
     * Alternatively, you can run `build.mac.sh`.
 * To build Windows version:
     * Must be built on Windows.
-    * .NET Framework 4.6.2 is required.
-    * Build the project `PLog.Win`.
-    * Alternatively, you can run `build.win.bat`.
+    * .NET Framework 4.6.2 and Visual Studio 2022 Community are required.
+    * Build the project `PLog.Win` in Visual Studio.
+    * Alternatively, you can run `build.win.bat`, which automatically sets up the Visual Studio 2022 environment.
 
 ## Pack
 * Make sure the two projects above have been built.
