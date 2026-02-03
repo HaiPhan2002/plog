@@ -4,6 +4,7 @@ open Eto.Forms
 open System.Drawing
 open FastColoredTextBoxNS
 open System
+open System.Windows.Forms
 
 type Mode =
     { BackColor: Color
@@ -12,6 +13,34 @@ type Mode =
       WarningStyle: TextStyle
       DebugStyle: TextStyle
       InfoStyle: TextStyle }
+
+type MyFCTB() =
+    inherit FastColoredTextBox()
+
+    let mutable lastWheelTime = DateTime.MinValue
+
+    override this.OnMouseWheel(e: MouseEventArgs) =
+        if (Control.ModifierKeys &&& Keys.Shift) = Keys.Shift then
+            // Tính khoảng thời gian giữa 2 lần wheel
+            let now = DateTime.Now
+            let dt = (now - lastWheelTime).TotalMilliseconds
+            lastWheelTime <- now
+
+            // Tính gia tốc dựa trên dt
+            let accel =
+                if dt < 100.0 then 3   // cuộn nhanh -> 3x
+                elif dt < 200.0 then 2  // cuộn vừa -> 2x
+                else 1                  // cuộn chậm -> 1x
+
+            let step = this.Font.Height * accel
+            let hs = this.HorizontalScroll
+            if hs.Visible then
+                let newVal = if e.Delta > 0 then hs.Value - step else hs.Value + step
+                hs.Value <- Math.Max(hs.Minimum, Math.Min(hs.Maximum, newVal))
+                this.UpdateScrollbars()
+                this.Invalidate()
+        else
+            base.OnMouseWheel(e)
 
 type WinLogArea (isDark) =
 
@@ -33,9 +62,9 @@ type WinLogArea (isDark) =
 
     let mutable currentMode = if isDark then darkMode else lightMode
 
-    let fctb = new FastColoredTextBox (ReadOnly = true, BackColor = currentMode.BackColor, ForeColor = Color.White,
+    let fctb = new MyFCTB (ReadOnly = true, BackColor = currentMode.BackColor, ForeColor = Color.White,
                                        SelectionColor = currentMode.SelColor,
-                                       Font = new Font ("Consolas", 9.75f))
+                                       Font = new Font("Consolas", 14.f))
 
     let appendLines lines =
         fctb.BeginUpdate ()
